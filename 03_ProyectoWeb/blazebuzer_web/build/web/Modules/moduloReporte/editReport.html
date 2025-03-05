@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>EDIT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h3 class="text-center text-primary">Editar Reporte</h3>
+            <form id="editReportForm">
+                <div class="mb-3">
+                    <label for="reportName" class="form-label">Titulo:</label>
+                    <input type="text" class="form-control" id="txtTitulo">
+                </div>
+                <div class="mb-3">
+                    <label for="reportName" class="form-label">Descripcion:</label>
+                    <input type="text" class="form-control" id="txtDescripcion">
+                </div>
+                <div class="mb-3">
+                    <label for="reportDate" class="form-label">Fecha:</label>
+                    <input type="date" class="form-control" id="txtDate" disabled>
+                </div>
+                
+                <!-- <div class="mb-3">
+                    <label for="reportStatus" class="form-label">Estado:</label>
+                    <select class="form-select" id="reportStatus" required>
+                        <option value="Completo">Completo</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Pendiente">Pendiente</option>
+                    </select>
+                </div> -->
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-success w-50 me-2" id="saveChanges">💾 Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary w-50 ms-2" id="cancelEdit">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </body>
+</html>
