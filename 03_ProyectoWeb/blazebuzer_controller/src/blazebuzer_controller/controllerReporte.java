@@ -91,4 +91,34 @@ public class controllerReporte {
         r.setFecha(rs.getDate("fecha"));
         return r;
     }
+    
+    
+    
+    public List<Reporte> getByDate(String fecha) throws Exception {
+    List<Reporte> reportes = new ArrayList<>();
+    // CONSULTA SQL para obtener reportes filtrados por fecha
+    String sql = "SELECT * FROM v_Reporte WHERE fecha = ?";
+    
+    // ABRIMOS CONEXION CON MYSQL
+    ConexionMySQL connMySQL = new ConexionMySQL();
+    Connection conn = connMySQL.open();
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    
+    pstmt.setString(1, fecha); // Asignamos la fecha al query
+    ResultSet rs = pstmt.executeQuery();
+    
+    // recorremos cada registro que nos devolvió la consulta
+    while(rs.next()){
+        reportes.add(fill(rs));
+    }
+    
+    // CERRAMOS CONEXIONES
+    rs.close();
+    pstmt.close();
+    connMySQL.close();
+    
+    // RETORNAMOS LA LISTA FILTRADA
+    return reportes;
+}
+
 }

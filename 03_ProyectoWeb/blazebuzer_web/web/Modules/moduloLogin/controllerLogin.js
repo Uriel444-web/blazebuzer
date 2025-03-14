@@ -39,7 +39,7 @@ async function validarAcceso() {
 async function logOut(){
     let token = localStorage.getItem('token');
     let parametros = {token: token};
-    let ruta = 'http://localhost:8080/zarape_web/api/Login/logout';
+    let ruta = 'http://localhost:8080/blazebuzer_web/api/Login/logout';
      if (!token) {
         Swal.fire('No hay sesión activa.', '', 'info');
         return;

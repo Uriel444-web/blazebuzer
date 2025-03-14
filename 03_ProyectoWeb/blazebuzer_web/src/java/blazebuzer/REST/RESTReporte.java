@@ -23,6 +23,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 import blazebuzer_controller.controllerReporte;
 import blazebuzer_model.Reporte;
+import jakarta.ws.rs.QueryParam;
 
 @Path("Reporte")
 public class RESTReporte {
@@ -75,4 +76,26 @@ public class RESTReporte {
         }
         return Response.ok(out).build();
     }
+    
+    @GET
+@Path("getByDate")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getByDate(@QueryParam("fecha") String fecha) {
+    String out = "";
+    controllerReporte cr = new controllerReporte();
+    List<Reporte> reportes = null;
+    
+    try {
+        reportes = cr.getByDate(fecha);
+        out = new Gson().toJson(reportes);
+    } catch (Exception e) {
+        e.printStackTrace();
+        out = """
+              {"error" : "Error interno del Servidor, comunicate al area de Sistemas"}
+              """;
+    }
+    
+    return Response.ok(out).build();
+}
+
 }

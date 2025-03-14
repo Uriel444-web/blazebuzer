@@ -79,12 +79,52 @@ export function cargarDetalle(pos){
 
 // vamos a extraer la fecha que selecciono el usuario en el formulario para pode
 // enviar la peticion/consulta a la API
-async function extraerFecha(){
+/* async function extraerFecha(){
     let fechaSeleccionada = document.getElementById("fecha").value;
     console.log("Fecha seleccionada:", fechaSeleccionada);
+} */
+
+async function extraerFecha() {
+    let fechaSeleccionada = document.getElementById("fecha").value;
+    
+    if (!fechaSeleccionada) {
+        Swal.fire("Error", "Por favor selecciona una fecha.", "warning");
+        return;
+    }
+    
+    let url = `http://localhost:8080/blazebuzer_web/api/Reporte/getByDate?fecha=${fechaSeleccionada}`;
+
+    
+    try {
+        let resp = await fetch(url);
+        let datos = await resp.json();
+        
+        let contenido = '';
+        
+        if (datos.error) {
+            Swal.fire("Error", datos.error, "error");
+        } else {
+            reportes = datos;
+            for (let i = 0; i < reportes.length; i++) {
+                contenido += `<tr>
+                                <td>${reportes[i].titulo}</td>
+                                <td>${reportes[i].descripcion}</td>
+                                <td>${reportes[i].fecha}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-edit" onclick="editar(${i})">✏️ Editar</button>
+                                    <button class="btn btn-sm btn-delete">🗑️ Eliminar</button>
+                                </td>
+                              </tr>`;
+            }
+        }
+        
+        document.getElementById("tbodyReportes").innerHTML = contenido;
+    } catch (error) {
+        Swal.fire("Error", "No se pudo obtener los reportes.", "error");
+        console.error("Error en la consulta de reportes por fecha:", error);
+    }
 }
 
 
+
 window.editar = editar;
-
-
