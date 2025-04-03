@@ -13,8 +13,18 @@ CREATE TABLE IF NOT EXISTS reporte (
     fecha 		DATE NOT NULL DEFAULT (CURRENT_DATE)
 );
 
+-- --------------------------------------------------------------------------------------------------------
+-- tabla tipo de usuario, estara relacionada con usuario como foreign key, de forma default al crearse un 
+-- usuario nuevo, este tendra el valor 2 que es usuario normal, SOLO HABRA UN UNICO USUARIO DE TIPO ADMINISTRADOR
+-- 1 - Administrador
+-- 2 - usuario normal
+-- --------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS rol(
+	idRol INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) not null
+);
 -- -------------------------------------------------------------------------------------------------------
--- TABLA USUARIOS
+-- TABLA USUARIOS SOLO HAY UN UNICO USUARIO TIPO ADMIN (idRol = 1)
 -- -------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS usuario 
 (
@@ -22,5 +32,7 @@ CREATE TABLE IF NOT EXISTS usuario
     nombre      VARCHAR(65) NULL,
     contrasenia VARCHAR(65) NULL,
     token		LONGTEXT NULL,
-    activo      INT NOT NULL DEFAULT 1
+    activo      INT NOT NULL DEFAULT 1,
+    rol 		INT NOT NULL DEFAULT 2,
+    FOREIGN KEY (rol) REFERENCES rol(idRol)
 ) ;

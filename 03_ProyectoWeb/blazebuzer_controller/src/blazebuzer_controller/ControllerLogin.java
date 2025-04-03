@@ -66,4 +66,22 @@ public class ControllerLogin {
 
     return idUsuario;
 }
+    public boolean verificarRol(int idUsuario) throws Exception {
+    String query = "SELECT rol FROM usuario WHERE idUsuario = ?";
+    ConexionMySQL connMySQL = new ConexionMySQL();
+    Connection conn = connMySQL.open();
+    PreparedStatement stmt = conn.prepareStatement(query);
+    stmt.setInt(1, idUsuario);
+    ResultSet rs = stmt.executeQuery();
+
+    if (rs.next()) {
+        int idRol = rs.getInt("rol");
+        conn.close();
+        return idRol == 1; // Retorna TRUE si es admin, FALSE si es usuario normal
+    } else {
+        conn.close();
+        throw new SQLException("Usuario no encontrado.");
+    }
+}
+
 }

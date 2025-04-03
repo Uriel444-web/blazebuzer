@@ -75,4 +75,25 @@ public class RESTLogin {
         }
         return Response.status(Response.Status.OK).entity(out).build();
     }
+    
+    @Path("validarRol")
+@POST
+@Produces(MediaType.APPLICATION_JSON)
+public Response validarRol(@FormParam("idUsuario") int idUsuario) {
+    String out;
+    ControllerLogin objCL = new ControllerLogin();
+    
+    try {
+        boolean esAdmin = objCL.verificarRol(idUsuario);
+        out = """
+              {"admin": %s}
+              """.formatted(esAdmin);
+    } catch (Exception ex) {
+        out = """
+              {"error": "Error al validar el rol, contacta al administrador"}
+              """;
+        ex.printStackTrace();
+    }
+    return Response.status(Response.Status.OK).entity(out).build();
+}
 }
