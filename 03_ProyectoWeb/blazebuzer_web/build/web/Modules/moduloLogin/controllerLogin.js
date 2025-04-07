@@ -1,4 +1,5 @@
 document.getElementById("btnLogIn").addEventListener('click', validarAcceso);
+document.getElementById("btnRegistrar").addEventListener('click', registrar);
 // document.getElementById("btnLogOut").addEventListener('click', logOut);
 
 
@@ -29,7 +30,7 @@ async function validarAcceso() {
         } else {
             localStorage.setItem("token", data.token);
             localStorage.setItem("idUsuario", data.idUsuario);
-            localStorage.setItem("nombre", data.nombreUsuario);
+            localStorage.setItem("nombre", data.nombre);
             
             // Llamar a la función para validar rol
             validarRol(data.idUsuario);
@@ -38,36 +39,7 @@ async function validarAcceso() {
         Swal.fire('Error de conexión.', '', 'error');
     }
 }
-async function logOut(){
-    let token = localStorage.getItem('token');
-    let parametros = {token: token};
-    let ruta = 'http://localhost:8080/blazebuzer_web/api/Login/logout';
-     if (!token) {
-        Swal.fire('No hay sesión activa.', '', 'info');
-        return;
-    }
-    fetch(ruta, {
-        method: "POST",
-        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-        body: new URLSearchParams({ token })
-    }).then(response => response.json()).then(response =>{
-        if(response.result){
-            localStorage.removeItem("token");
-            localStorage.removeItem("nombre");
-            window.location.href = "http://localhost:8080/zarape_web";
-        }else if(response.error){
-            Swal.fire({
-                icon:"error",
-                title : "oops...",
-                text: response.error
-            });
-        }
-    });
-}
-function cargarNombre()
-{
-    document.getElementById("txtNombreUsuario").innerHTML = localStorage.getItem("nombre");
-}
+
 
 async function validarRol(idUsuario) {
     let url = 'http://localhost:8080/blazebuzer_web/api/Login/validarRol';
@@ -97,4 +69,8 @@ async function validarRol(idUsuario) {
         console.error("Error en validarRol:", error);
         Swal.fire('Error al validar rol.', error.message, 'error');
     }
+}
+
+async function registrar(){
+    window.location.href = "http://localhost:8080/blazebuzer_web/newUsuario.html";
 }

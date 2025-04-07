@@ -59,7 +59,7 @@ public class RESTReporte {
         return Response.ok(out).build();
     }
     @GET
-    @Path("getAll")
+    @Path("getAllAdmin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll(){
         String out = "";
@@ -98,4 +98,117 @@ public Response getByDate(@QueryParam("fecha") String fecha) {
     return Response.ok(out).build();
 }
 
+@Path("getAllUsuario")
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+public Response getAllUsuario() throws Exception{
+    String out = "";
+    controllerReporte cr = new controllerReporte();
+    List<Reporte> reportes = null;
+    try {
+        reportes = cr.getAllUsuario();
+        out = new Gson().toJson(reportes);
+    } catch (Exception e) {
+         e.printStackTrace();
+            out = """
+                  {"error" : "Error interno del Servidor, comunicate al area de Sistemas"}
+                  """;
+    }
+    return Response.ok(out).build();
+}
+
+@Path("aceptar")
+@POST
+@Produces(MediaType.APPLICATION_JSON)
+public Response aceptar(@FormParam("idReporte") @DefaultValue("0") int idReporte){
+    String out = null;
+        controllerReporte cr = new controllerReporte();
+        Reporte r = null;
+        Gson gson = new Gson();
+        System.out.println("idReporte: "+ idReporte);
+        try {
+            if(idReporte < 1){
+                out = """
+                      {"error": "no se recibio ningun ID"}
+                      """;
+            }else{
+                cr.aceptar(idReporte);
+                
+            }
+            out = gson.toJson(idReporte);
+        } catch (JsonParseException jpe) {
+            jpe.printStackTrace();
+            out = """
+                  {"error":"El JSON recibido no es correcto."}
+                  """;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            out = """
+                  {"error":"Error interno del servidor, comunícate al area de sistemas de FlameBuzer."}
+                  """;
+        }
+        return Response.ok(out).build();
+}
+@Path("update")
+@POST
+@Produces(MediaType.APPLICATION_JSON)
+public Response update(@FormParam("datosReporte") @DefaultValue("") String datosReporte) throws Exception{
+     String out = null;
+        controllerReporte cr = new controllerReporte();
+        Reporte r = null;
+        Gson gson = new Gson();
+        System.out.println("datosReporte: "+ datosReporte);
+        try {
+        r = gson.fromJson(datosReporte, Reporte.class);
+        cr.Update(r);
+        out = gson.toJson(r);
+    } catch (JsonParseException jpe) {
+         jpe.printStackTrace();
+            out = """
+                  {"error":"El JSON recibido no es correcto."}
+                  """;
+    }catch (Exception e)
+        {
+            e.printStackTrace();
+            out = """
+                  {"error":"Error interno del servidor, comunícate al area de sistemas de El Zarape."}
+                  """;
+        }
+        return Response.ok(out).build();
+}
+
+@Path("delete")
+@POST
+@Produces(MediaType.APPLICATION_JSON)
+public Response Delete(@FormParam("idReporte") @DefaultValue("0") int idReporte) throws Exception{
+    String out = "";
+    controllerReporte cr = new controllerReporte();
+    Reporte r = null;
+    Gson gson = new Gson();
+    System.out.println("idReporte: "+ idReporte);
+    try {
+        if(idReporte < 1){
+                out = """
+                      {"error": "no se recibio ningun ID"}
+                      """;
+            }else{
+                cr.delete(idReporte);
+                
+            }
+            out = gson.toJson(idReporte);
+    }catch (JsonParseException jpe) {
+            jpe.printStackTrace();
+            out = """
+                  {"error":"El JSON recibido no es correcto."}
+                  """;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            out = """
+                  {"error":"Error interno del servidor, comunícate al area de sistemas de El Zarape."}
+                  """;
+        }
+        return Response.ok(out).build();
+}
 }

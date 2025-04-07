@@ -1,0 +1,28 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 6 abr 2025, 10:37:42
+    Author     : casa
+*/
+.profile-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #d32f2f;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .badge-custom {
+      background-color: #d32f2f;
+    }
+
+    .editable:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }

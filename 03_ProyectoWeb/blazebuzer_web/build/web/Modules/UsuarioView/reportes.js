@@ -10,7 +10,7 @@ export function inicializar() {
 
 export async function recargarTablaReportes(){
     // url de la api getAll
-    let url = "http://localhost:8080/blazebuzer_web/api/Reporte/getAll";
+    let url = "http://localhost:8080/blazebuzer_web/api/Reporte/getAllUsuario";
     
     // Invocamos el servicio:
     let resp = await fetch(url);
@@ -51,7 +51,7 @@ document.getElementById("btnFiltroDate").addEventListener('click', extraerFecha)
 
 async function extraerFecha() {
     let fechaSeleccionada = document.getElementById("fecha").value;
-    
+    console.log(fechaSeleccionada);
     if (!fechaSeleccionada) {
         Swal.fire("Error", "Por favor selecciona una fecha.", "warning");
         return;

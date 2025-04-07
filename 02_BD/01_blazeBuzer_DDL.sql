@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS reporte (
     idReporte 	int primary key auto_increment,
     titulo	 	varchar(100) null,
     descripcion varchar(250) null,
-    fecha 		DATE NOT NULL DEFAULT (CURRENT_DATE)
+    fecha 		DATE NOT NULL DEFAULT (CURRENT_DATE),
+    estatus		INT NOT NULL DEFAULT 0
 );
 
 -- --------------------------------------------------------------------------------------------------------
